@@ -16,6 +16,7 @@ import com.auth0.android.callback.Callback;
 import com.auth0.android.provider.WebAuthProvider;
 import com.auth0.android.result.Credentials;
 import com.example.cruzhealthapp.R;
+import com.example.cruzhealthapp.UploadHealthInfo;
 
 public class LoginActivity extends AppCompatActivity {
     @Override
@@ -46,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onFailure(@NonNull final AuthenticationException exception) {
                         runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Error: "
                                 + exception.getMessage(), Toast.LENGTH_SHORT).show());
+                        //TODO: Remove me!
+                        startActivity(new Intent(LoginActivity.this, UploadHealthInfo.class));
                     }
 
                     @Override

@@ -1,17 +1,11 @@
-package com.example.cruzhealthapp.ui.login;
+package com.example.cruzhealthapp;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.security.crypto.MasterKey;
-import com.example.cruzhealthapp.R;
-
-import android.content.Context;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.security.KeyPairGeneratorSpec;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,38 +14,12 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.GeneralSecurityException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.cert.CertificateException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.InvalidParameterSpecException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.util.Calendar;
-import java.util.Enumeration;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import javax.security.auth.x500.X500Principal;
 
 
 public class UploadHealthInfo extends AppCompatActivity {
@@ -111,11 +79,19 @@ public class UploadHealthInfo extends AppCompatActivity {
                     System.out.println(out.toString());
 
                     InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                    System.out.println(readStream(in));
+                    if(readStream(in).equals("1")) {
+                        runOnUiThread(() -> Toast.makeText(UploadHealthInfo.this,
+                                "Data uploaded successfully!",
+                                Toast.LENGTH_SHORT).show());
+                    }
+
                 } finally {
                     urlConnection.disconnect();
                 }
             } catch (Exception e) {
+                runOnUiThread(() -> Toast.makeText(UploadHealthInfo.this,
+                        "Error uploading data",
+                        Toast.LENGTH_SHORT).show());
                 e.printStackTrace();
             }
 
